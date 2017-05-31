@@ -1,0 +1,243 @@
+* {
+	padding:0;
+	margin:0;
+}
+
+html, body {
+	width:100%;
+}
+
+.navbar {
+	height:70px;
+	color:#fff;
+}
+.logo {
+	width: 110px;
+	margin:5px;
+}
+.navbar {
+	z-index:100;
+}
+.navbar-collapse {
+	background-color:#252525;
+}
+.nav-btn {
+	padding: 10px 15px;
+	margin: 13px 10px;
+	border: none;
+	font-size:16px;
+	background-color: #484848;
+	box-shadow: 1px 1px 5px black;
+}
+#registerModal {
+	display: none;
+}
+#loginModal {
+	display: none;
+}
+#form-logout {
+	display: none;
+}
+.greet {
+	color:#68a437;
+	font-size:16px;
+	margin-top:23px;
+	margin-right:10px;
+}
+
+.form-box {
+	max-width: 800px;
+	box-sizing: border-box;
+	margin:100px auto;
+	padding: 50px;
+	background-color: #131212;
+	z-index: 100;
+	position:relative;
+	color:yellow;
+}
+.close {
+	position: absolute;
+	top:-30px;
+	right: -30px;
+	font-size: 24px;
+	font-weight: 500;
+	color:yellow;
+	opacity: 1;
+}
+.form-input input{
+	color:black;
+	font-size: 16px;
+	box-sizing: border-box;
+	width: 70%; min-width: 250px;
+	padding:10px 0 10px 5px;
+	margin-top:30px;
+	border:solid 1px black;
+}
+
+.form-input input[type="submit"]{
+	color:black;
+	background: #c9c702;
+	font-size: 18px;
+	font-weight: 700;
+	width: auto; 
+	padding:10px 20px;
+	text-align: center;	
+	margin-top:20px;
+}
+.form-input input[type="submit"]:hover {
+	background: #d5d326;
+}
+
+
+main {
+	width: 100%;
+	height: 100%;
+}
+.chat {
+	width: 100%; 
+	height:85%;
+	background-color: #f9f9f9;
+	box-shadow: 1px 1px 8px black;
+	overflow: auto;
+	position: relative;
+}
+.chat-name {
+	width: 100%;
+	height: 40px;
+	padding:5px; 
+	position: absolute;
+	top:0;
+	left:0;
+	background-color: #252525;
+	opacity: 0.2;
+	text-align: center;
+	font-size:16px;
+	color:white;
+}
+.message-box {
+	width: 100%; 
+	height: 70px;
+	margin: 20px 0 20px;
+	padding:15px 0;
+	background-color: #2d2d2d;
+	box-shadow: 1px 1px 8px black;
+}
+#message-form input{
+	padding: 10px;
+	width: 100%;
+	border: none;
+	float:left;
+}
+#smilesBtn {
+	 width: auto;
+	 height:25px;
+	 margin-top:8px;
+	 cursor: pointer;
+}
+#smilesChoose {
+    display: none;
+    position: absolute;
+    background: #fff;
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #eee;
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#smilesChoose span {
+    cursor: pointer;
+}
+
+#smilesBtn {
+    display: inline-block;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+#smilesBtn:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+
+.right-block>div {
+	width: 100%;
+	height: auto; max-height: 31%;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	background-color: #2d2d2d;
+	box-shadow: 1px 1px 8px black;
+	overflow: auto;
+}
+.title {
+	display: block;
+	padding: 10px;
+	text-align: center;
+	color:#68a437;
+	font-size:17px;
+	font-weight:700;
+}
+.list-group-item:first-child {
+	border-radius: 0;
+}
+.list-group-item:last-child {
+	border-radius: 0;
+}
+.list-group-item {
+	width: 100%;
+	padding: 8px 20px;
+	border:none;
+	border-top: 1px solid #373737;
+    border-bottom: 1px solid #252525;
+	border-radius: 0;
+	background-color: inherit;
+	font-size:15px;
+	color:#fff;
+	cursor: pointer;
+}
+.list-group-item:hover {
+	background-color: #252525;
+}
+.list-group-item.active {
+	background-color: #68a437;
+}
+.list-group-item.active:hover {
+	background-color: #68a437;
+}
+.dropdown-menu:hover {
+	z-index: 1000;
+}
+.join:before {
+	content:'Приєднатись'
+}
+.left:before {
+	content:'Покинути'
+}
+.delete:before {
+	content:'Видалити'
+}
+.online .list-group-item {
+	padding: 7px 20px;
+}
+.group-name {
+	line-height: 35px;
+}
+.list-group-btn {
+	padding: 7px 10px;
+	position: absolute;
+	top:9px;
+	right: 20px;
+	box-sizing: border-box;
+	border: none;
+	font-size:14px;
+	background-color: #484848;
+	box-shadow: 1px 1px 5px black;
+}
+.list-group-item>.badge {
+	margin: 7px 0 7px 15px;
+	color:black;
+	font-size:12px;
+	float:none;
+}

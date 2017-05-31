@@ -1,0 +1,121 @@
+<!DOCTYPE html5>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat</title>
+	<script src="https://cdn.socket.io/socket.io-1.7.2.js"></script>
+	<script src="js/jquery-3.1.0.min.js"> </script>
+  	<script src="js/bootstrap.min.js" > </script>
+  	<link rel="stylesheet" href="css/bootstrap.min.css">
+  	<link rel="stylesheet" href="css/style.css">
+
+
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/jquery.emotions.fb.css">
+</head>
+<body>
+	<header>
+		 <!--  ***** NAVBAR *****  -->
+		<ul class="nav navbar-nav">
+			<li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#registerModal" id="btn-register">Реєстрація</button></li>
+			<li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#loginModal" id="btn-login">Ввійти</button></li>
+			<li><form id="form-logout"><button type="submit" class="btn btn-default">Вийти</button></form></li>
+			<li>Ласкаво просимо, <span id="greeting"></span></li>
+		</ul>
+
+		<!--  ***** MODALS *****  -->
+		<div id="registerModal" class="modal fade">
+			<div class="form-box">
+				<button class="close" type="button" data-dismiss="modal">x</button>
+					   <h3>Будь ласка заповніть форми</h3>
+					  <form class="form-input" id="form-register">
+						<br>
+						<input type="text" name="username"> username
+						<br>
+						<input type="text" name="password" > password
+						<br>
+						<input type="submit" value="Реєстрація">
+					  </form>
+			</div>
+		</div>
+		<div id="loginModal" class="modal fade">
+				<div class="form-box">
+					<button class="close" type="button" data-dismiss="modal">x</button>
+					<h3>Заповніть поля для входу</h3>
+					<form class="form-input" id="form-login">
+						<br>
+						<input type="text" name="username" > username
+						<br>
+						<input type="text" name="password" > password
+						<br>
+						<input type="submit" value="Увійти">
+					</form>
+				</div>
+			</div>
+		<!--  ***** END MODALS *****  -->
+	</header>
+
+
+	<main>
+		<div class="row-fluid">
+			<div class="col-md-2">
+
+				<!--  ***** ONLINE *****  -->
+				<div class="online">
+					Онлайн:
+					<ul id="online-list">
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-7" id="main-col">
+				<!--  ***** CHAT *****  -->
+				<div id="0-chat" class="chat"></div>
+
+				<!--  ***** SEND FORM & SMILES *****  -->
+				<div class="message-block">
+					<form id="message-form" onsubmit="sendMessage(this.message.value); return false">
+   					 <input id="chatInp" type="text" name="message" placeholder="message" autocomplete="off" accept="image/jpeg,image/png,image/gif" autofocus>
+						<img src="img/smiles.png" id="smilesBtn">
+   					 <button type="submit"><img src="img/button.png" alt="" height="28px"></button>
+					</form>
+					<div id="smilesChoose">o:) o.O 3:) :D <3 :* :) 8| :/ ;) :'( :( 8) >:( :p</div>
+				</div>
+			</div>
+			<div class="col-md-3 right-col">
+
+				<!--  ***** MY GROUPS *****  -->
+				<div class="my-groups">
+					<h4>Мої групи:</h4>
+					<form id="form-create-group">
+						<input type="text" name="name">name
+						<button id="create-group" type="submit">Create</button>
+					</form>
+
+					<ul id="my-group-list" class="list-group">
+						<li id="0-my" class="list-group-item active">MAIN <span class="badge badge-default badge-pill"></span> </li>
+					</ul>
+				</div>
+
+				<!--  ***** LIST OF THE GROUPS *****  -->
+				<div class="list-of-the-groups">
+					<h4>Список груп:</h4>
+					<ul id="all-group-list" class="list-group">
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	<footer>
+		
+	</footer>
+
+	<script src="js/script.js"></script>
+	<script src="js/checkAuthorization.js"></script>
+	<script src="js/sendMessage.js"></script>
+	<script src="js/formsEvent.js"></script>
+	<script src="js/jquery.emotions.js"></script>
+	<script src="js/smile.js"></script>
+</body>
+</html>
