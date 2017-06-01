@@ -1,4 +1,4 @@
-var mongoose = require("../db");
+var mongoose = require("mongoose");
 var autoIncrement = require('mongoose-auto-increment');
 mongoose.Promise = global.Promise;
 

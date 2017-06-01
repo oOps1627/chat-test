@@ -1,4 +1,4 @@
-var mongoose = require("../db");
+var mongoose = require("mongoose");
 var crypto = require('crypto');
 
 mongoose.Promise = global.Promise;
