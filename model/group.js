@@ -17,6 +17,9 @@ var schema = new Schema({
     },
     usersId: [{
         type: String
+    }],
+    usersName: [{
+        type: String
     }]
 });
 

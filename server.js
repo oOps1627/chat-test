@@ -40,7 +40,6 @@ app.use(sessionMiddleware);
 app.post('/form_register', controllerUser.createUser);
 app.post('/form_login', controllerUser.login);
 app.post('/form_logout', controllerUser.logout);
-app.get('/form_createGroup', controllerGroup.createGroup);
 
 io.use(function (socket, next) {
 
@@ -85,9 +84,9 @@ io.on('connection', function(socket) {
     var id = socket.handshake.user._id;
     var rooms = socket.handshake.user.rooms;
 
-    if(!id) return;
-
     socket.join('0');
+
+    if(!id) return;
 
     if(rooms) {
         rooms.forEach(function(room) {
@@ -100,7 +99,6 @@ io.on('connection', function(socket) {
     Group.find({usersId: id}, function(err, groups) {
         if(err) throw err;
         socket.emit("update my groups", groups, id);
-
         io.sockets.emit("socket-connect", username, controllerUser.onlineList, controllerGroup.groupList, isUnique);
     });
 
@@ -109,11 +107,15 @@ io.on('connection', function(socket) {
     });
 
     socket.on('left of the group', function(groupId) {
-       controllerGroup.leftOfTheGroup(groupId, id, socket);
+       controllerGroup.leftOfTheGroup(groupId, id, username, socket);
     });
 
     socket.on('join to the group', function(groupId) {
-        controllerGroup.joinToTheGroup(groupId, id, socket);
+        controllerGroup.joinToTheGroup(groupId, id, username, socket);
+    });
+
+    socket.on('create group', function(groupName) {
+        controllerGroup.createGroup(groupName, id, username, socket);
     });
 
     socket.on('delete group', function(groupId) {

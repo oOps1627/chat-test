@@ -14,16 +14,16 @@ socket.on('left of the group', function(groupId) {
     left(groupId);
 });
 
-socket.on('socket-connect', function(username, sockets, allGroups, isUnique) {
+socket.on('group created', function(data) {
+    var createGroupModal = $('#createGroupModal');
+    createGroupModal.modal('hide');
+    createGroupModal.find('.status').html('');
+    join(data.newGroup, data.isAuthor);
+    updateAllGroupList(data.allGroups);
+});
 
-    if(isUnique) {
-        var chat = document.getElementById(currentChatId +'-chat');
-        var p = document.createElement("p");
-        p.innerHTML = username + " підключився";
-        chat.appendChild(p);
-    }
-    updateOnlineList(sockets);
-    updateAllGroupList(allGroups);
+socket.on('name is exist', function() {
+    $('#createGroupModal').find('.status').html('Таке ім`я вже існує');
 });
 
 socket.on('socket-disconnect', function(username, sockets) {
@@ -37,19 +37,20 @@ socket.on('socket-disconnect', function(username, sockets) {
 // join to/left of the chat
 $('.all-groups').on('click', function(e) {
     var target = e.target;
-    if (target.tagName == 'BUTTON') {
-        if(target.classList.contains('join')) {
-            socket.emit('join to the group', target.parentNode.id);
-            target.classList.remove('join');
-            target.classList.add('left');
+    var groupId = target.parentNode.id;
 
-        } else if(target.classList.contains('left')) {
-            socket.emit('left of the group', target.parentNode.id);
-            target.classList.remove('left');
-            target.classList.add('join');
-        }
+    if(target.classList.contains('join')) {
+        socket.emit('join to the group', groupId);
+        target.classList.remove('join');
+        target.classList.add('left');
+    } else if(target.classList.contains('left')) {
+        socket.emit('left of the group', groupId);
+        target.classList.remove('left');
+        target.classList.add('join');
+    } else if(target.classList.contains('delete')) {
+        socket.emit('delete group', groupId);
+        drop(groupId);
     }
-
 });
 
 
@@ -70,7 +71,7 @@ $('#my-group-list').on('click', function(e) {
             drop(groupId);
         }
 
-    } else if(target.tagName == 'LI'){
+    } else if(target.classList.contains('list-group-item')){
         var groupId = parseInt(target.id);
         if(groupId !== currentChatId) {
             $('#'+ currentChatId +'-chat').hide();
@@ -102,19 +103,33 @@ function updateAllGroupList(allGroups) {
     }
     [].forEach.call(allGroups, function(group) {
 
-        var li = document.createElement("li");
+        var item = document.createElement("li");
         var button = document.createElement('button');
         var spanName = document.createElement('span');
         var spanCaret = document.createElement('span');
+        var ulDropdown = document.createElement('ul');
+        var titleDropdown = document.createElement('li');
 
-        li.id = group._id;
-        li.className = "list-group-item";
+        item.id = group._id;
+        item.className = "list-group-item";
         spanName.textContent = group.name + ' ';
         spanName.className = 'group-name dropdown-toggle';
+        spanName.setAttribute('data-toggle', 'dropdown');
+        ulDropdown.className = 'dropdown-menu';
+        titleDropdown.textContent = 'Cписок користувачів:';
         spanCaret.className = 'caret';
 
-        ulAllGroups.appendChild(li);
-        li.appendChild(spanName);
+        ulAllGroups.appendChild(item);
+        item.appendChild(spanName);
+        item.appendChild(ulDropdown);
+        ulDropdown.appendChild(titleDropdown);
+
+        group.usersName.forEach(function(username) {
+            var li = document.createElement('li');
+            li.textContent = username;
+            ulDropdown.appendChild(li);
+        });
+
         spanName.appendChild(spanCaret);
 
         var isMyGroup;
@@ -133,12 +148,11 @@ function updateAllGroupList(allGroups) {
             button.className = "list-group-btn join"; // else create join btn in the list of all groups
         }
 
-        li.appendChild(button);
+        item.appendChild(button);
     })
 }
 
 function updateMyGroupList(myGroups, id) {
-
     if (myGroups instanceof Array) {
         [].forEach.call(myGroups, function(group) {
             var isAuthor = false;
@@ -153,18 +167,24 @@ function updateMyGroupList(myGroups, id) {
 }
 
 function join(newGroup, isAuthor) {
-    var li = document.createElement('li');
+    var item = document.createElement('li');
     var button = document.createElement('button');
     var spanName = document.createElement('span');
+    var ulDropdown = document.createElement('ul');
+    var titleDropdown = document.createElement('li');
     var spanCaret = document.createElement('span');
     var spanBadge = document.createElement('span');
 
-    li.id =  newGroup._id + '-my';
-    li.className = 'list-group-item';
+    item.id =  newGroup._id + '-my';
+
+    item.className = 'list-group-item';
     spanName.textContent = newGroup.name + ' ';
     spanName.className = 'group-name dropdown-toggle';
+    spanName.setAttribute('data-toggle', 'dropdown');
     spanCaret.className = 'caret';
     spanBadge.className = 'badge badge-default badge-pill';
+    ulDropdown.className = 'dropdown-menu';
+    titleDropdown.textContent = 'Cписок користувачів:';
 
     if(isAuthor) {
         button.className = 'list-group-btn delete';
@@ -172,15 +192,24 @@ function join(newGroup, isAuthor) {
         button.className = 'list-group-btn left';
     }
 
-    ulMyGroups.appendChild(li);
-    li.appendChild(spanName);
+    ulMyGroups.appendChild(item);
+    item.appendChild(spanName);
+    item.appendChild(ulDropdown);
+    ulDropdown.appendChild(titleDropdown);
+
+    newGroup.usersName.forEach(function(username) {
+        var li = document.createElement('li');
+        li.textContent = username;
+        ulDropdown.appendChild(li);
+    });
+
     spanName.appendChild(spanCaret);
-    li.appendChild(spanBadge);
-    li.appendChild(button);
+    item.appendChild(spanBadge);
+    item.appendChild(button);
 
     var mainCol = document.getElementById('main-col');
     var newChat = document.createElement('div');
-    var id = parseInt(li.id);
+    var id = parseInt(item.id);
     newChat.id = id + '-chat';
     newChat.className = "chat";
     newChat.style.display = "none";
@@ -208,7 +237,5 @@ function checkIsActive(groupId) {
         $('#0-chat').show();
     }
 }
-
-
 
 

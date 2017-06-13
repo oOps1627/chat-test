@@ -38,22 +38,24 @@ schema.methods.checkPassword = function(password) {
     return this.encryptPassword(password) == this.hashedPassword;
 };
 
-schema.methods.addRoom = function(groupId) {
+schema.methods.addRoom = function(groupId, done) {
     this.rooms.push(groupId);
     this.save(function (err) {
-        if (err) throw err;
+        if(err) throw err;
+        if(done) done(err);
+        console.log('ok')
     });
 };
 
-schema.methods.removeRoom = function(groupId) {
+schema.methods.removeRoom = function(groupId, done) {
     var user = this;
     user.rooms.forEach(function(room) {
         if(room == groupId) {
-            user.rooms.remove(groupId);
+            user.rooms.remove(room);
             user.save(function (err) {
                 if (err) throw err;
+               if(done) done(err);
             });
-            return
         }
     });
 };

@@ -5,14 +5,14 @@ var onlineList=[];
 exports.createUser = function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
+    if(!username || !password || username.length < 4 || username.length > 30) {
+        res.sendStatus(403);
+        return
+    }
     User.findOne({username: username}, function(err, isUser) {
         if(isUser) {
             res.sendStatus(403);
         } else {
-            if(!username || !password) {
-                res.sendStatus(403);
-                return
-            }
             var user = new User(req.body);
 
             user.save(function(err) {
@@ -76,6 +76,7 @@ exports.removeOnlineList = function(id, username, socket) {
 
 function checkIsUnique(id) {
     var isUnique = true;
+    if(!id) return false;
     [].forEach.call(onlineList, function(elem) {
         if (elem.id.toString() == id.toString()) {
             isUnique = false;

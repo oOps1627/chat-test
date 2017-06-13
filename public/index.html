@@ -37,97 +37,105 @@
   </div>
 </nav>
 
-<!-- MODALS -->
-	<div id="registerModal" class="modal fade">
-			<div class="form-box">
-				<button class="close" type="button" data-dismiss="modal">x</button>
-				<h3>Будь ласка заповніть форми</h3>
-				<form class="form-input" id="form-register">
-				<br>
-				<input type="text" name="username" placeholder="Нікнейм"> 
-				<br>
-				<input type="text" name="password" placeholder="Пароль"> 
-				<br>
-				<input type="submit" value="Реєстрація">
-				</form>
-			</div>
-		</div>
-		<div id="loginModal" class="modal fade">
-			<div class="form-box">
-				<button class="close" type="button" data-dismiss="modal">x</button>
-				<h3>Заповніть поля для входу</h3>
-				<form class="form-input" id="form-login">
-					<br>
-					<input type="text"  placeholder="Нікнейм"> 
-					<br>
-					<input type="text" placeholder="Пароль"> 
-					<br>
-					<input type="submit" value="Увійти">
-				</form>
-			</div>
-		</div>
-
 <main>
 <div class="row-fluid">
-	<div class="col-md-9" id="main-col">
+	<div class="col-md-9 col-sm-8" id="main-col">
 		<!-- CHAT -->
 		<div id="0-chat" class="chat">
-			<!--<div class="chat-name">Chat 1</div>-->
+			<!--<div class="opacity-box"><span id="chat-name">Chat1</span></div>-->
 		</div>
+
 		<div class="message-box">
-			<div class="row-fluid">
-				<div class="col-md-11">
-					<!-- MESSAGE FORM -->
-					<form id="message-form" onsubmit="sendMessage(this.message.value); return false">
-					<input id="chatInp" type="text" name="message" placeholder="Введіть повідомлення" autofocus>
-					</form>
-				</div>
-				<!-- SMILES -->
-				<div class="col-md-1"><img src="img/smile.png" id="smilesBtn"></div>
-				<div id="smilesChoose">o:) o.O 3:) :D <3 :* :) 8| :/ ;) :'( :( 8) >:( :p</div>
+			<div class="col-md-11 col-sm-10 col-xs-9 col-input">
+
+				<!-- MESSAGE FORM -->
+				<form id="message-form" onsubmit="sendMessage(this.message.value); return false">
+					<input id="chatInp" type="text" name="message" placeholder="Введіть повідомлення" maxlength="300" autocomplete="off" autofocus>
+				</form>
 			</div>
-			
+
+			<!-- SMILES -->
+			<div class="col-md-1 col-sm-2 col-xs-3"><img src="img/smile.png" id="smilesBtn"></div>
+			<div id="smilesChoose">o:) o.O 3:) :D <3 :* :) 8| :/ ;) :'( :( 8) >:( :p</div>
 		</div>
+        <span id="notice"></span>
+
 	</div>
-	<div class="col-md-3 right-block">
+	<div class="col-md-3 col-sm-4 right-block">
 		<!-- ONLINE -->
 		<div class="online">
 			<span class="title">Онлайн:</span>
 			<ul class="list-group" id="online-list">
-				<li class="list-group-item">oopsik</li>
 			</ul>
 		</div>
 
 		<!-- MY GROUPS -->
 		<div class="my-groups">
-			<span class="title">Мої групи:</span>
+			<span class="title">Мої кімнати:</span>
 			<ul class="list-group" id="my-group-list">
 				<li id="0-my" class="list-group-item active">
-					<span class="group-name dropdown-toggle" data-toggle="dropdown">Загальний чат <span class="caret"></span></span>
-					 <ul class="dropdown-menu">
-      					<li><a href="#">Пункт 1</a></li>
-					     <li><a href="#">Пункт 2</a></li>
-					     <li><a href="#">Пункт 3</a></li>
-					     <li><a href="#">Пункт 4</a></li>
-					  </ul>
-					<span class="badge badge-default badge-pill">5</span>
-					 <button class="list-group-btn left"></button>
+					<span class="group-name" >Загальна кімната</span>
+					<span class="badge badge-default badge-pill"></span>
 				</li>
+
 			</ul>
+			<button class="list-group-btn create" data-toggle="modal" data-target="#createGroupModal">Сворити кімнату</button>
 		</div>
 
 		<!-- ALL GROUPS -->
 		<div class="all-groups">
-			<span class="title">Список груп:</span>
+			<span class="title">Список кімнат:</span>
 			<ul class="list-group" id="all-group-list">
-				<li class="list-group-item">
-				<span class="group-name">Group 1<span class="caret"></span></span>
-				</li>
 			</ul>
 		</div>
 	</div>
 </div>	
 </main>
+
+
+<!-- MODALS -->
+<div id="registerModal" class="modal fade">
+	<div class="form-box">
+		<button class="close" type="button" data-dismiss="modal">x</button>
+		<h3>Заповніть поля для реєстрації</h3>
+		<form class="form-input" id="form-register">
+			<input type="text" name="username" placeholder="Логін" minlength="4" maxlength="30">
+			<br>
+			<input type="password" name="password" placeholder="Пароль" minlength="6" maxlength="30" autocomplete="off">
+			<br>
+			<input type="submit" value="Реєстрація">
+		</form>
+		<span class="status"></span>
+	</div>
+</div>
+
+<div id="loginModal" class="modal fade">
+	<div class="form-box">
+		<button class="close" type="button" data-dismiss="modal">x</button>
+		<h3>Заповніть поля для входу</h3>
+		<form class="form-input" id="form-login">
+			<input type="text" name="username" placeholder="Логін" minlength="4" maxlength="30">
+			<br>
+			<input type="password" name="password" placeholder="Пароль" minlength="6" maxlength="30" autocomplete="off">
+			<br>
+			<input type="submit" value="Увійти">
+		</form>
+		<span class="status"></span>
+	</div>
+</div>
+
+<div id="createGroupModal" class="modal fade">
+	<div class="form-box">
+		<button class="close" type="button" data-dismiss="modal">x</button>
+		<h3>Введіть назву групи</h3>
+		<form class="form-input" id="form-create-group">
+			<input type="text" name="name" minlength="4" maxlength="30" autocomplete="off">
+			<br>
+			<input type="submit" value="Створити">
+		</form>
+        <span class="status"></span>
+	</div>
+</div>
 
 
 	<script src="js/jquery-3.1.0.min.js"> </script>

@@ -6,7 +6,9 @@ socket.on('message', function(data) {
 
 function sendMessage(message) {
     var chat = document.getElementById(currentChatId +'-chat');
-    if(formMessage.message.value) {
+    var s = formMessage.message.value;
+    s = s.replace(/^\s+|\s+$/g, '');
+    if(s) {
         socket.emit('message', message, currentChatId);
         formMessage.message.value = "";
         chat.scrollTop = 99999;

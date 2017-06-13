@@ -3,4 +3,5 @@
 "mongoose": {
 	"uri": "mongodb://localhost/chat"
 }
+"secret": "my secret"
 }
