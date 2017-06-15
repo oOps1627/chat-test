@@ -1,5 +1,4 @@
 var async = require('async');
-var Q = require('q');
 var Group = require('../model/group').Group;
 var User = require('../model/user').User;
 
