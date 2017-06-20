@@ -9,9 +9,13 @@ function sendMessage(message) {
     var s = formMessage.message.value;
     s = s.replace(/^\s+|\s+$/g, '');
     if(s) {
-        socket.emit('message', message, currentChatId);
-        formMessage.message.value = "";
-        chat.scrollTop = 99999;
+        if(window.containsMat(s)){
+            alert("Спілкуйся культурно")
+        } else {
+            socket.emit('message', message, currentChatId);
+            formMessage.message.value = "";
+            chat.scrollTop = 99999;
+        }
     }
 }
 

@@ -16,6 +16,7 @@ exports.createGroup = function(groupName, userId, username, socket) {
         return;
     }
     Group.findOne({name: groupName}, function(err, isGroup) {
+        if (err) next(err);
         if(isGroup) {
             socket.emit('name is exist');
             return;
@@ -34,7 +35,6 @@ exports.createGroup = function(groupName, userId, username, socket) {
                     if(err) throw err;
 
                     groupList.push(group);
-                    console.log(group._id);
                     user.addRoom(group._id);
 
                     socket.join(group._id);
@@ -45,10 +45,8 @@ exports.createGroup = function(groupName, userId, username, socket) {
                     });
                 });
             });
-
-
         }
-        if (err) next(err);
+
     });
 };
 
