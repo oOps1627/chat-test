@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var controllerUser = require("./controllers/user");
 var controllerGroup = require("./controllers/group");
+var controllerMessage = require("./controllers/message");
 
 var app = express();
 var server = http.createServer(app);
@@ -84,13 +85,12 @@ io.on('connection', function(socket) {
     var id = socket.handshake.user._id;
     var rooms = socket.handshake.user.rooms;
 
-    socket.join('0');
-
     if(!id) return;
 
     if(rooms) {
         rooms.forEach(function(room) {
             socket.join(room);
+            controllerMessage.getMessages(room, socket);
         });
     }
     var isUnique = controllerUser.checkIsUnique(id);
@@ -103,6 +103,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('message', function(message, chatId) {
+        controllerMessage.saveMessage(id, username, message, chatId);
         io.sockets.in(chatId).emit("message", {username: username, message:message, chatId: chatId});
     });
 

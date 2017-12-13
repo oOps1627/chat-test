@@ -30,7 +30,11 @@ socket.on('socket-disconnect', function(username, sockets) {
     var chat = document.getElementById(currentChatId +'-chat');
     var p = document.createElement("p");
     p.innerHTML = username + " відключився";
-    chat.appendChild(p);
+
+    setTimeout(function(){
+        chat.appendChild(p);
+    }, 100);
+
     updateOnlineList(sockets);
 });
 

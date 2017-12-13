@@ -8,7 +8,10 @@ socket.on('check-authorization', function(data) {
                 var chat = document.getElementById(currentChatId +'-chat');
                 var p = document.createElement("p");
                 p.innerHTML = username + " підключився";
-                chat.appendChild(p);
+
+                setTimeout(function(){
+                    chat.appendChild(p);
+                }, 100);
             }
             updateOnlineList(sockets);
             updateAllGroupList(allGroups);
@@ -21,7 +24,10 @@ socket.on('check-authorization', function(data) {
                 var chat = document.getElementById(currentChatId +'-chat');
                 var p = document.createElement("p");
                 p.innerHTML = username + " підключився";
-                chat.appendChild(p);
+
+                setTimeout(function(){
+                    chat.appendChild(p);
+                }, 100);
             }
         });
     }

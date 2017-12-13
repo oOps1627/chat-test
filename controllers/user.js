@@ -13,7 +13,7 @@ exports.createUser = function(req, res, next) {
         if(isUser) {
             res.sendStatus(403);
         } else {
-            var user = new User(req.body);
+            var user = new User({username:username, password:password, rooms:"0"});
 
             user.save(function(err) {
                 if(err) {
